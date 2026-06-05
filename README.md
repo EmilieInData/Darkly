@@ -1,2 +1,2 @@
 # Darkly
-Introduction to cyber security we can encounter on the World Wide Web.
+Introduction to cyber security, general vulnerabilities we can encounter on the World Wide Web.
