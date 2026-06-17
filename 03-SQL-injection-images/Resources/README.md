@@ -16,39 +16,16 @@ Since the condition `1=1` is always true, the query returns all records from the
 
 ## How to Find the Vulnerability?
 
-On the **Members** page, there is a form that allows users to search for members by ID.
+On the **Searchimg** page, there is a form that allows users to search for images by ID.
 
-First, we can determine whether SQL injection is possible and identify the type of database by performing a blind test:
+From the previous SQL injection, which returned all tables and their columns, we discovered that there is a table called `list_images` containing four fields: `id`, `url`, `title`, and `comment`.
 
-```sql
-1' OR '1'='1
-```
-
-This input returns a syntax error indicating that the backend uses **MariaDB**, confirming that user input is not properly sanitized.
-
-Since the form is vulnerable, we can inject SQL statements.
-
-We can also infer that the original query contains two selected columns:
+We can therefore try the following injection:
 
 ```sql
-SELECT <param1>, <param2> FROM users WHERE id =
+1 UNION SELECT title, comment FROM list_images
 ```
-
-Using the `UNION` operator, we can combine the original query with another one:
-
-```sql
-1 UNION SELECT table_name, column_name FROM information_schema.columns
-```
-
-This query returns the names of tables and columns stored in the database metadata, allowing us to discover the database structure.
-
-Once the available columns have been identified, we can extract data from them:
-
-```sql
-1 UNION SELECT Commentaire, countersign FROM users
-```
-
-This reveals the contents of the selected fields. In this challenge, one of these fields contains the flag that must be decrypted and re-encrypted to complete the exercise.
+This query successfully returns the contents of the title and comment fields. One of the comments contains an encrypted message that we must decrypt and then re-encrypt according to the challenge instructions in order to obtain the flag.
 
 ## Suggestions to Prevent SQL Injection
 
