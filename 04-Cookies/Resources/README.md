@@ -16,7 +16,7 @@ Typical cycle: \
 .server answer → "Set-Cookie: session_id=abc123" \
 .browser keep it \
 .now on every page the browser send automatically: "Cookie: session_id=abc123" \
-.the server read this cookie to know who you are \
+.the server read this cookie to know who you are
 
 
 ## How to find the vulnerability?
@@ -24,21 +24,24 @@ Typical cycle: \
 Open your console with 'Inspect', go to 'Application', check in the cookie board if there is one. \
 Here you can find one named 'I_am_admin' with a matched value.
 
-Name:       Value: \
-I_am_admin	b326b5062b2f0e69046810717534cb09 \
+Name: \
+I_am_admin
+
+Value: \
+b326b5062b2f0e69046810717534cb09
 
 The value is a hashed MD5 word. \
-*More infos about MD5 hash in the general README* \
+*More infos about MD5 hash in the general README*
 
 When you pass this value in a MD5 hash lookup tool he will say 'false'. \
-It means the value say 'no i'm not the admin'! \
+It means the value say 'no i'm not the admin'!
 
 What will happen if you try to pass 'true'? \
 So now you do it the opposite and hash the word 'true' and change the cookie value with it and actualize the page and that's it!
 
 The server do probably : \
 if MD5(cookie) is equal to the hash of "false" → classic user \
-if MD5(cookie) is equal to the hash of "true" → admin \
+if MD5(cookie) is equal to the hash of "true" → admin
 
 The flag appear because you literally send to the server 'yes i'm the admin' with your console!
 
