@@ -10,25 +10,26 @@ The HTTP protocol is 'stateless', every request is independent, the server doesn
 For example with a mail box, if there is no cookie and you try to access to your mail box he will probably ask you to connect.
 If there is a cookie, he will display personal informations from the account associated.
 
-Typical cycle: \
-.connexion (username + password) \
-.server check → correct ✔️ \
-.server answer → "Set-Cookie: session_id=abc123" \
-.browser keep it \
-.now on every page the browser send automatically: "Cookie: session_id=abc123" \
-.the server read this cookie to know who you are
+<pre>
+Typical cycle:
 
+.connexion (username + password)
+.server check → correct ✔️
+.server answer → "Set-Cookie: session_id=abc123"
+.browser keep it
+.now on every page the browser send automatically: "Cookie: session_id=abc123"
+.the server read this cookie to know who you are
+</pre>
 
 ## How to find the vulnerability?
 
 Open your console with 'Inspect', go to 'Application', check in the cookie board if there is one. \
 Here you can find one named 'I_am_admin' with a matched value.
 
-Name: \
-I_am_admin
-
-Value: \
-b326b5062b2f0e69046810717534cb09
+<pre>
+Name:          Value:
+I_am_admin     b326b5062b2f0e69046810717534cb09
+</pre>
 
 The value is a hashed MD5 word. \
 *More infos about MD5 hash in the general README*
